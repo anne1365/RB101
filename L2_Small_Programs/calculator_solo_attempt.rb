@@ -23,7 +23,7 @@ loop do
   when "multiply"
     puts num_one.to_i * num_two.to_i
   when "divide"
-    puts num_one.to_i / num_two.to_i
+    puts num_one.to_f / num_two.to_f
   when "exit"
     puts "Thanks for using the calculator app!"
     break
