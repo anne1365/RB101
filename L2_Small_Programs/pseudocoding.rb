@@ -117,6 +117,6 @@ end
 numbers = [2, 34, 4, 5, 7, 67, 21] 
 print oddArray(numbers) #--> [2, 4, 7, 21]
 
-
+ 
 
     
