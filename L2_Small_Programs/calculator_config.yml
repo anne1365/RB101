@@ -1,0 +1,33 @@
+#INTRODUCTIONS
+:get_name: "Welcome to the calculator! Please enter your name: "
+:name_validation: "Make sure to use a valid name!"
+:greet_by_name: "Hi,"
+
+#NUMBER COLLECTION
+:get_first_num: "What's the first number?"
+:get_second_num: "What's the second number?"
+:invalid_num: "Error: not a valid number."
+
+#GETTING OPERATOR
+:get_desired_operator: "What operation would you like to perform?
+      \n   1 - addition
+      \n   2 - subtraction
+      \n   3 - multiplication
+      \n   4 - division"
+:invalid_operator: "Error: Must choose 1, 2, 3, or 4!"
+
+#PROCESSING OPERATION    
+:add: "Adding"
+:sub: "Subtracting"
+:mult: "Multiplying"
+:div: "Dividing"
+:report_operation: " the two numbers.. "
+
+#REPORTING RESULT
+:report_result: "The number is "
+
+#ANOTHER CALCULATION?
+:another_calculation: "Do you want to perform another calculation? (Y to calculate again)"
+
+#ON CLOSING
+:goodbye: "Thanks for using the calculator,"

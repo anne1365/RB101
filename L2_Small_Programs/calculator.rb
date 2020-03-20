@@ -3,75 +3,73 @@
 # perform the operation on the two numbers
 # output the result
 
+require 'yaml'
+MESSAGES = YAML.load_file('calculator_config.yml')
+
 def prompt(message)
   Kernel.puts("=> #{message}")
 end
 
 def valid_number?(num)
-  num.to_i() != 0
+  num.to_f().to_i().to_s() == num
 end
 
 def operation_to_message(operator)
-  case operator
-  when '1'
-    'Adding'
-  when '2'
-    'Subtracting'
-  when '3'
-    'Multiplying'
-  when '4'
-    'Dividing'
-  end
+  word = case operator
+         when '1'
+           MESSAGES[:add]
+         when '2'
+           MESSAGES[:sub]
+         when '3'
+           MESSAGES[:mult]
+         when '4'
+           MESSAGES[:div]
+         end
+
+  word
 end
 
-prompt("Welcome to the calculator! Please enter your name: ")
+prompt(MESSAGES[:get_name])
 
 name = ""
 loop do
   name = Kernel.gets().chomp()
 
   if name.empty?()
-    prompt("Make sure to use a valid name!")
+    prompt(MESSAGES[:name_validation])
   else
     break
   end
 end
 
-prompt("Hi, #{name}!")
+prompt("#{MESSAGES[:greet_by_name]} #{name}!")
 
 loop do # main loop
   number1 = ''
   loop do # first number loop
-    prompt("What's the first number?")
+    prompt(MESSAGES[:get_first_num])
     number1 = Kernel.gets().chomp()
 
     if valid_number?(number1)
       break
     else
-      prompt("Error: not a valid number.")
+      prompt(MESSAGES[:invalid_num])
     end
   end
 
   number2 = ''
   loop do
-    prompt("What's the second number?")
+    prompt(MESSAGES[:get_second_num])
     number2 = Kernel.gets().chomp()
 
     if valid_number?(number2)
       break
     else
-      prompt("Error: not a valid number.")
+      prompt(MESSAGES[:invalid_num])
     end
   end
 
-  operator_prompt = <<-MSG # allows multiline strings
-    What operation would you like to perform?
-      1 - addition
-      2 - subtraction
-      3 - multiplication
-      4 - division
-  MSG
-  prompt(operator_prompt)
+  prompt(MESSAGES[:get_desired_operator])
 
   operator = ''
   loop do
@@ -80,30 +78,30 @@ loop do # main loop
     if %w(1 2 3 4).include?(operator)
       break
     else
-      prompt("Error: Must choose 1, 2, 3, or 4!")
+      prompt(MESSAGES[:invalid_operator])
     end
   end
 
-  prompt("#{operation_to_message(operator)} the two numbers.. ")
+  prompt("#{operation_to_message(operator)} #{MESSAGES[:report_operation]}")
   result = case operator
            when '1'
-             number1.to_i() + number2.to_i()
+             number1.to_f() + number2.to_f()
            when '2'
-             number1.to_i() - number2.to_i()
+             number1.to_f() - number2.to_f()
            when '3'
-             number1.to_i() * number2.to_i()
+             number1.to_f() * number2.to_f()
            when '4'
              number1.to_f() / number2.to_f()
            end
 
-  prompt("The number is #{result}")
+  prompt("#{MESSAGES[:report_result]} #{result}")
 
-  prompt("Do you want to perform another calculation? (Y to calculate again")
+  prompt(MESSAGES[:another_calculation])
   response = Kernel.gets().chomp()
   break unless response.downcase == 'y'
 end
 
-prompt("Thanks for using the calculator, #{name}!")
+prompt("#{MESSAGES[:goodbye]} #{name}!")
 
 =begin
 THINGS TO THINK ABOUT:
