@@ -5,23 +5,20 @@ CHOICES = {
   'l' => 'lizard',
   'o' => 'spock'
 }
+PLAYER_MOVES = {
+  'r' => ['s', 'l'],
+  'p' => ['r', 'o'],
+  's' => ['p', 'l'],
+  'l' => ['p', 'o'],
+  'o' => ['r', 's']
+}
 
 def prompt(message)
   Kernel.puts("=> #{message}")
 end
 
 def win?(first, second)
-  r = CHOICES.key("rock")
-  p = CHOICES.key("paper")
-  s = CHOICES.key("scissors")
-  l = CHOICES.key("lizard")
-  o = CHOICES.key("spock")
-  
-  (first == r && (second == s || second == l)) ||  
-    (first == p && (second == r || second == o)) ||
-    (first == s && (second == p || second == l)) ||
-    (first == l && (second == p || second == o)) ||
-    (first == o && (second == r || second == s))
+  PLAYER_MOVES[first].include?(second)
 end
 
 def display_result(player, computer)
@@ -57,15 +54,15 @@ loop do
     if CHOICES.include?(choice.downcase)
       break
     else
-      prompt("------------------------------------------")
+      prompt("------------------------------------")
       prompt("Error: That's not a valid choice!")
-      prompt("------------------------------------------")
+      prompt("------------------------------------")
     end
   end
 
   computer_choice = CHOICES.keys.sample
 
-  prompt("------------------------------------------")
+  prompt("----------------------------------------")
   prompt("You chose: #{CHOICES[choice.downcase]}")
   prompt("Computer chose: #{CHOICES[computer_choice]}")
 
@@ -76,7 +73,7 @@ loop do
   end
 
   display_result(choice, computer_choice)
-  prompt("-------------------------------------------")
+  prompt("----------------------------------------")
 
   display_scoreboard(wins, losses)
   break if (wins >= 5) || (losses >= 5)
