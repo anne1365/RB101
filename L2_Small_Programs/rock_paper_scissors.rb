@@ -1,0 +1,72 @@
+VALID_CHOICES = %w(rock paper scissors)
+#CHOICES = {'r' => 'rock', 'p' => 'paper', 's' => 'scissors', 'l' => 'lizard', 'o' => 'spock'}
+
+def prompt(message)
+  Kernel.puts("=> #{message}")
+end
+
+def win?(first, second)
+  (first == 'rock' && second == 'scissors') ||
+    (first == 'scissors' && second == 'paper') ||
+    (first == 'paper' && second == 'rock')
+end
+
+def display_result(player, computer)
+  if win?(player, computer)
+    prompt("You won")
+  elsif win?(computer, player)
+    prompt("Computer won!")
+  else
+    prompt("It's a tie!")
+  end
+end
+
+def display_scoreboard(win, loss)
+  if (win == 5 && loss == 5)
+    prompt("You're BOTH winners - it's a tie!")
+  elsif (win >= 5 )
+    prompt("GAME OVER: Player won!")
+  elsif (loss >= 5)
+    prompt("GAME OVER: Computer won!")
+  else
+    prompt("HUMAN: #{win}  COMPUTER: #{loss}")
+  end
+end
+
+wins = 0
+losses = 0
+loop do
+  
+  choice = ''
+  loop do
+    prompt("Choose one: #{VALID_CHOICES.join(', ')}:")
+    choice = Kernel.gets().chomp()
+
+    if VALID_CHOICES.include?(choice.downcase)
+      break
+    else
+      prompt("Error: That's not a valid choice!")
+    end
+  end
+
+  computer_choice = VALID_CHOICES.sample
+
+  Kernel.puts("You chose:#{choice.downcase}; Computer chose:#{computer_choice}")
+
+  if win?(choice, computer_choice)
+    wins += 1
+  elsif win?(computer_choice, choice)
+    losses += 1
+  end
+
+  display_result(choice, computer_choice)
+
+  display_scoreboard(wins, losses)
+  break if (wins >= 5 || losses >= 5)
+
+  prompt("Would you like to play again? (y/n)")
+  play_again = gets().chomp()
+  break unless play_again.downcase().start_with?('y')
+end
+
+prompt("Thanks for playing!")
