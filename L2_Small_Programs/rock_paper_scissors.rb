@@ -1,32 +1,45 @@
-VALID_CHOICES = %w(rock paper scissors)
-#CHOICES = {'r' => 'rock', 'p' => 'paper', 's' => 'scissors', 'l' => 'lizard', 'o' => 'spock'}
+CHOICES = {
+  'r' => 'rock',
+  'p' => 'paper',
+  's' => 'scissors',
+  'l' => 'lizard',
+  'o' => 'spock'
+}
 
 def prompt(message)
   Kernel.puts("=> #{message}")
 end
 
 def win?(first, second)
-  (first == 'rock' && second == 'scissors') ||
-    (first == 'scissors' && second == 'paper') ||
-    (first == 'paper' && second == 'rock')
+  r = CHOICES.key("rock")
+  p = CHOICES.key("paper")
+  s = CHOICES.key("scissors")
+  l = CHOICES.key("lizard")
+  o = CHOICES.key("spock")
+  
+  (first == r && (second == s || second == l)) ||  
+    (first == p && (second == r || second == o)) ||
+    (first == s && (second == p || second == l)) ||
+    (first == l && (second == p || second == o)) ||
+    (first == o && (second == r || second == s))
 end
 
 def display_result(player, computer)
   if win?(player, computer)
-    prompt("You won")
+    prompt("YOU WON!")
   elsif win?(computer, player)
-    prompt("Computer won!")
+    prompt("COMPUTER WON :(")
   else
-    prompt("It's a tie!")
+    prompt("IT'S A TIE.")
   end
 end
 
 def display_scoreboard(win, loss)
-  if (win == 5 && loss == 5)
+  if (win == 5) && (loss == 5)
     prompt("You're BOTH winners - it's a tie!")
-  elsif (win >= 5 )
+  elsif win >= 5
     prompt("GAME OVER: Player won!")
-  elsif (loss >= 5)
+  elsif loss >= 5
     prompt("GAME OVER: Computer won!")
   else
     prompt("HUMAN: #{win}  COMPUTER: #{loss}")
@@ -36,22 +49,25 @@ end
 wins = 0
 losses = 0
 loop do
-  
   choice = ''
   loop do
-    prompt("Choose one: #{VALID_CHOICES.join(', ')}:")
+    prompt("CHOOSE:\nr - rock\np - paper\ns - scissors\nl - lizard\no - spock")
     choice = Kernel.gets().chomp()
 
-    if VALID_CHOICES.include?(choice.downcase)
+    if CHOICES.include?(choice.downcase)
       break
     else
+      prompt("------------------------------------------")
       prompt("Error: That's not a valid choice!")
+      prompt("------------------------------------------")
     end
   end
 
-  computer_choice = VALID_CHOICES.sample
+  computer_choice = CHOICES.keys.sample
 
-  Kernel.puts("You chose:#{choice.downcase}; Computer chose:#{computer_choice}")
+  prompt("------------------------------------------")
+  prompt("You chose: #{CHOICES[choice.downcase]}")
+  prompt("Computer chose: #{CHOICES[computer_choice]}")
 
   if win?(choice, computer_choice)
     wins += 1
@@ -60,9 +76,10 @@ loop do
   end
 
   display_result(choice, computer_choice)
+  prompt("-------------------------------------------")
 
   display_scoreboard(wins, losses)
-  break if (wins >= 5 || losses >= 5)
+  break if (wins >= 5) || (losses >= 5)
 
   prompt("Would you like to play again? (y/n)")
   play_again = gets().chomp()
