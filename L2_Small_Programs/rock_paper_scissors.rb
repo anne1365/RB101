@@ -1,11 +1,11 @@
-CHOICES = {
+VALID_CHOICES = {
   'r' => 'rock',
   'p' => 'paper',
   's' => 'scissors',
   'l' => 'lizard',
   'o' => 'spock'
 }
-PLAYER_MOVES = {
+WINNING_MOVES = {
   'r' => ['s', 'l'],
   'p' => ['r', 'o'],
   's' => ['p', 'l'],
@@ -18,7 +18,7 @@ def prompt(message)
 end
 
 def win?(first, second)
-  PLAYER_MOVES[first].include?(second)
+  WINNING_MOVES[first].include?(second)
 end
 
 def display_result(player, computer)
@@ -60,11 +60,11 @@ loop do
     end
   end
 
-  computer_choice = CHOICES.keys.sample
+  computer_choice = VALID_CHOICES.keys.sample
 
   prompt("----------------------------------------")
-  prompt("You chose: #{CHOICES[choice.downcase]}")
-  prompt("Computer chose: #{CHOICES[computer_choice]}")
+  prompt("You chose: #{VALID_CHOICES[choice.downcase]}")
+  prompt("Computer chose: #{VALID_CHOICES[computer_choice]}")
 
   if win?(choice, computer_choice)
     wins += 1
