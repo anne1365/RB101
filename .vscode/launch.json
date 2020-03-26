@@ -5,13 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Listen for rdebug-ide",
+      "name": "Debug Local",
       "type": "Ruby",
       "request": "attach",
+      "cwd": "${workspaceRoot}",
       "remoteHost": "127.0.0.1",
       "remotePort": "1234",
-      "remoteWorkspaceRoot": "${workspaceRoot}",
-      "cwd": "${workspaceRoot}"
+      "remoteWorkspaceRoot": "${workspaceRoot}"
     }
   ]
 }
