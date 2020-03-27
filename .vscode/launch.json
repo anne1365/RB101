@@ -5,7 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug Local",
+      "name": "Debug Local File",
+      "type": "Ruby",
+      "request": "launch",
+      "program": "${file}"
+    },
+    {
+      "name": "Listen for rdebug-ide",
       "type": "Ruby",
       "request": "attach",
       "cwd": "${workspaceRoot}",

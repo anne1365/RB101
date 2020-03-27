@@ -8,7 +8,6 @@ end
 
 def make(new_car)
   new_car.split(" ")[0]
-  binding.pry
 end
 
 def model(new_car)
