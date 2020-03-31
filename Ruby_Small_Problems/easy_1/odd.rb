@@ -30,7 +30,8 @@ END
 =end
 
 def is_odd?(query_num)
-  query_num.abs % 2 != 0
+  query_num.abs % 2 != 0 # OR query_num.remainder(2) != 0 
+
 end
 
 puts is_odd?(2)    # => false

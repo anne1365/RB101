@@ -1,10 +1,6 @@
-# RB101
-Projects, exercises, and experimentation involved with Launch School's RB101 course.
-______________________________________
-PEDAC TEMPLATE TO COPY & PASTE: 
-
 =begin
-PROBLEM:
+PROBLEM: Write a method that takes one argument, a positive
+integer, and returns the sum of its digits.
 
 UNDERSTANDING THE PROBLEM:
   INPUTS  -->
@@ -24,4 +20,3 @@ ALGORITHM / PSEUDOCODE:
   FORMAL:
 
 =end
-
