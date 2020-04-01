@@ -57,5 +57,7 @@ percent_tip = gets.to_f
 tip_amt    = (bill_amt * (percent_tip / 100)).round(2)
 total_bill = (bill_amt + tip_amt).round(2)
 
-puts "The tip is $#{tip_amt}"
-puts "The total is $#{total_bill}"
+# BELOW MODIFIED FOR FURTHER EXPLORATION
+
+puts "The tip is $#{format("%.2f", tip_amt)}"
+puts "The total is $#{format("%.2f", total_bill)}"
