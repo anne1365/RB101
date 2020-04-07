@@ -44,3 +44,16 @@ p xor?(5.odd?, 4.odd?) == true
 p xor?(5.odd?, 4.even?) == false
 p xor?(5.even?, 4.odd?) == false
 
+=begin
+FURTHER EXPLORATION
+- a ruby method that accepts a block or a string, but not both (when
+  presence of one of the two is required)
+
+- the xor method doesn't perform short circuit operations, and it
+  wouldn't make sense for it to be. || only has to evaluate the second 
+  argument if the first is false, and && only has to evaluate the second
+  argument if the first is true. 
+  
+  In the case of xor, if the first argument
+  is true, we need to know the second isn't, and if the first argument is
+  false, we need to know whether the second argument is true. 

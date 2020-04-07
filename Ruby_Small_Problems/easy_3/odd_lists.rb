@@ -10,10 +10,10 @@ UNDERSTANDING THE PROBLEM:
   INPUTS  --> array of values of whatever type
   OUTPUTS --> every other array element
   RULES:
-    - elements beng returned are the elements w/ odd indexes 
+    - elements beng returned are the elements w/ even indexes 
   MENTAL MODEL:
   Method will take the array provided and return a new array containing
-  the elements from the original array that were in odd index positions
+  the elements from the original array that were in even index positions
 
 EXAMPLES / TEST CASES: 
 
