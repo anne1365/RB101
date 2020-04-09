@@ -101,8 +101,4 @@ munsters.map do |key, value|
   end
 end
 
-p munsters
-pp munsters
-puts munsters
-
  
