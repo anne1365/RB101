@@ -40,3 +40,4 @@ p ascii_value('Launch School') == 1251
 p ascii_value('a') == 97
 p ascii_value('') == 0
 p ascii_value('hi there') == 777
+
