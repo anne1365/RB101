@@ -46,17 +46,15 @@ DATA STRUCTURE:
   INPUTS  --> INTEGER, pos or neg, that represents minutes before/after midnight
   OUTPUTS --> STRING representing time, in 24 hour hh:mm format
 
-ALGORITHM / PSEUDOCODE:
-  CASUAL:
-
-  FORMAL:
-
 =end
 
+MINUTES_PER_HOUR = 60
+HOURS_PER_DAY = 24
+MINUTES_PER_DAY = MINUTES_PER_HOUR * HOURS_PER_DAY
 
 def time_of_day(minutes_before_midnight)
-    leftover_minutes = minutes_before_midnight % 60
-    hours_from_midnight= ((minutes_before_midnight - leftover_minutes) / 60) % 24
+    leftover_minutes = minutes_before_midnight % MINUTES_PER_HOUR
+    hours_from_midnight = ((minutes_before_midnight - leftover_minutes) / MINUTES_PER_HOUR) % HOURS_PER_DAY
 
     time = ("%02d" % hours_from_midnight).to_s + ':' + ("%02d" % leftover_minutes).to_s
 end
@@ -87,18 +85,23 @@ end
 def before_midnight(string_time)
   hours = string_time.scan(/\d/).first(2).join.to_i
   minutes = string_time.scan(/\d/).last(2).join.to_i
-  minutes_before_midnight = (hours * 60) + minutes
-  minutes_before_midnight = 0 if minutes_before_midnight == 1440
+  minutes_before_midnight = MINUTES_PER_DAY - ((hours * MINUTES_PER_HOUR) + minutes)
+  minutes_before_midnight = 0 if minutes_before_midnight == MINUTES_PER_DAY
+  minutes_before_midnight
 
 end
 
 def after_midnight(string_time)
-
+  hours = string_time.scan(/\d/).first(2).join.to_i
+  minutes = string_time.scan(/\d/).last(2).join.to_i
+  minutes_before_midnight = (hours * MINUTES_PER_HOUR) + minutes
+  minutes_before_midnight = 0 if minutes_before_midnight == MINUTES_PER_DAY
+  minutes_before_midnight
 end
 
-after_midnight('00:00') == 0
+p after_midnight('00:00') == 0
 p before_midnight('00:00') == 0
-after_midnight('12:34') == 754
+p after_midnight('12:34') == 754
 p before_midnight('12:34') == 686
-after_midnight('24:00') == 0
+p after_midnight('24:00') == 0
 p before_midnight('24:00') == 0
