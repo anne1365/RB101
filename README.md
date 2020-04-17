@@ -3,7 +3,7 @@ Projects, exercises, and experimentation involved with Launch School's RB101 cou
 ______________________________________
 PEDAC TEMPLATE TO COPY & PASTE: 
 
-=begin
+=begin ------------------------------------------------------------------------
 PROBLEM:
 
 UNDERSTANDING THE PROBLEM:
@@ -26,5 +26,4 @@ ALGORITHM / PSEUDOCODE:
 
   FORMAL:
 
-=end
-
+=end # ------------------------------------------------------------------------

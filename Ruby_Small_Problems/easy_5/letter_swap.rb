@@ -21,11 +21,13 @@ UNDERSTANDING THE PROBLEM:
       - we are to assume that every string only contains words and spaces
     IMPLICIT:
       - case of the words is maintained
+
 EXAMPLES / TEST CASES:
   swap('Oh what a wonderful day it is') == 'hO thaw a londerfuw yad ti si'
   swap('Abcde') == 'ebcdA'
   swap('a') == 'a' 
-=end
+
+=end----------------------------------------------------------------------
 
 def swap(array)
   tmp = []
