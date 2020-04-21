@@ -14,16 +14,14 @@ UNDERSTANDING THE PROBLEM:
     EXPLICIT:
 
     IMPLICIT:
+  IDEAS:
 
-EXAMPLES / TEST CASES: 
+EXAMPLES / TEST CASES:
 
-DATA STRUCTURE: 
+DATA STRUCTURE:
   INPUTS  -->
   OUTPUTS -->
 
 ALGORITHM / PSEUDOCODE:
-  CASUAL:
-
-  FORMAL:
 
 =end # ------------------------------------------------------------------------
