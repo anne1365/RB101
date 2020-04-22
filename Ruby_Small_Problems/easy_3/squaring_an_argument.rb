@@ -1,24 +1,4 @@
-=begin
-PROBLEM:
 
-UNDERSTANDING THE PROBLEM:
-  INPUTS  -->
-  OUTPUTS -->
-  RULES:
-  MENTAL MODEL:
-
-EXAMPLES / TEST CASES: 
-
-DATA STRUCTURE: 
-  INPUTS  -->
-  OUTPUTS -->
-
-ALGORITHM / PSEUDOCODE:
-  CASUAL:
-
-  FORMAL:
-
-=end
 def multiply(num1, num2)
   num1 * num2
 end

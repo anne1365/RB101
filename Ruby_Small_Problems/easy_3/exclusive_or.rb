@@ -26,13 +26,6 @@ EXAMPLES / TEST CASES:
   xor?(5.odd?, 4.even?) == false
   xor?(5.even?, 4.odd?) == false
 
-DATA STRUCTURE: 
-  INPUTS  -->
-  OUTPUTS -->
-
-ALGORITHM / PSEUDOCODE:
-
-
 =end
 
 def xor?(arg1, arg2)

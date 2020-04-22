@@ -13,15 +13,6 @@ EXAMPLES / TEST CASES:
   - multiply(0, 1) --> 0
   - multiply(3, 5) --> 15
   
-DATA STRUCTURE: 
-  INPUTS  --> 
-  OUTPUTS -->
-
-ALGORITHM / PSEUDOCODE:
-  CASUAL:
-
-  FORMAL:
-
 =end
 
 def multiply(num1, num2)

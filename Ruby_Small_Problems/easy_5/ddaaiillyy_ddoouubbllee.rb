@@ -8,22 +8,6 @@ or String#squeeze!.
 UNDERSTANDING THE PROBLEM:
   INPUTS  --> string containing consecutive duplicates of characters
   OUTPUTS --> string without said duplicates
-  QUESTIONS: 
-  RULES:
-    EXPLICIT:
-
-    IMPLICIT:
-
-EXAMPLES / TEST CASES: 
-
-DATA STRUCTURE: 
-  INPUTS  -->
-  OUTPUTS -->
-
-ALGORITHM / PSEUDOCODE:
-  CASUAL:
-
-  FORMAL:
 
 =end # ------------------------------------------------------------------------
 
