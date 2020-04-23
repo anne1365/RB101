@@ -25,6 +25,45 @@ The block is ended. Line 7 shows that the return value is the original collectio
 when each is called.
 EACH DOESN'T DO ANYTHING WITH THE BLOCK'S RETURN VALUE, AND SINCE THE RETURN VALUE OF EACH IS THE CALLING OBJECT,
 THIS IS WHAT'S RETURNED.
+=end
+
+#EXAMPLE 2
+[[1, 2], [3, 4]].map do |arr|
+  puts arr.first
+end
+# 1
+# 3
+# => [nil, nil]
+
+=begin
+LINE(S)  |        ACTION      |      OBJECT     |  SIDE EFFECT  |      RETURN VALUE       | RETURN VALUE USED?  
+------------------------------------------------------------------------------------------------------------------------------
+   1     |  Method call(map)  |   outer array   |    none       |   new array [0,0]       | no, shown on line 6
+  1-3    |  block execution   |  each sub-array |    none       |        nil              | yes, this is the value modified
+   2     |  method call(first)|  each sub-array |    none       |   el 0 of sub-array     | yes, used by puts
+   2     |  method call(puts) |  sub-array[0]   |outputs sub[0] |        nil              | yes, this is return value of block
+=end
+
+
+#EXAMPLE 3
+[[1, 2], [3, 4]].map do |arr|
+  puts arr.first
+  arr.first
+end
+# 1
+# 3
+# => [1, 3]
+
+=begin
+LINE(S)  |        ACTION      |      OBJECT     |  SIDE EFFECT  |      RETURN VALUE       | RETURN VALUE USED?  
+------------------------------------------------------------------------------------------------------------------------------
+   1     |   method call(map) |  outer array    |   none        |    new array [1, 3]     |     no
+  1-4    |  block execution   |  sub-array      |   none        |    int @ sub[0]         |    yes, used by map to transform
+   2     |  method call(first)|  sub-array      |   none        |    sub[0] of two subs   |    yes, used by puts
+   2     |  method call(puts) | sub[0] of 2 subs| outputs sub[0]|       nil               |    no
+   3     |  method call(first)|  sub-array      |   none        |    sub[0] of two subs   |    yes, block return value
+=end
+
 
 
 
