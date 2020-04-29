@@ -29,28 +29,16 @@ ALGORITHM / PSEUDOCODE:
 
 
 def staggered_case(str)
-  counter = 0
-
-  arr = str.chars.map do |char|
-    counter += 1
-
-    if counter.odd?
-      char.upcase
-    elsif counter.even?
-      char.downcase
-    else
-      char
-    end
+  arr = str.chars.map.with_index do |char, idx|
+    idx.odd? ? char.downcase : char.upcase
   end
-    
+  
   arr.join
 end
 
-
-p staggered_case('I Love Launch School!') == 'I LoVe lAuNcH ScHoOl!'
+p staggered_case('I Love Launch School!')# == 'I LoVe lAuNcH ScHoOl!'
 p staggered_case('ALL_CAPS') == 'AlL_CaPs'
 p staggered_case('ignore 77 the 444 numbers') == 'IgNoRe 77 ThE 444 NuMbErS'
-
 
 
 
@@ -60,6 +48,20 @@ should uppercase or lowercase each letter. The non-alphabetic characters should 
 value; they just don't count when toggling the desired case.
 =end
 
-staggered_case('I Love Launch School!') == 'I lOvE lAuNcH sChOoL!'
-staggered_case('ALL CAPS') == 'AlL cApS'
-staggered_case('ignore 77 the 444 numbers') == 'IgNoRe 77 ThE 444 nUmBeRs'
+
+def staggered_case(str)
+  counter = 0  
+  arr = str.chars.map do |char|  
+    if char.match?(/[A-Za-z]/)
+      counter += 1    
+      counter.odd? ? char.upcase : char.downcase 
+    else
+      char
+    end
+  end  
+  arr.join
+end
+
+p staggered_case('I Love Launch School!') == 'I lOvE lAuNcH sChOoL!'
+p staggered_case('ALL CAPS') == 'AlL cApS'
+p staggered_case('ignore 77 the 444 numbers') == 'IgNoRe 77 ThE 444 nUmBeRs'

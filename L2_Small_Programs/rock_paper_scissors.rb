@@ -1,16 +1,9 @@
-VALID_CHOICES = {
-  'r' => 'rock',
-  'p' => 'paper',
-  's' => 'scissors',
-  'l' => 'lizard',
-  'o' => 'spock'
-}
-WINNING_MOVES = {
-  'r' => ['s', 'l'],
-  'p' => ['r', 'o'],
-  's' => ['p', 'l'],
-  'l' => ['p', 'o'],
-  'o' => ['r', 's']
+CHOICES = {
+  'r' => {name: 'rock', beats: ['s', 'l']},
+  'p' => {name: 'paper', beats: ['r', 'o']},
+  's' => {name: 'scissors', beats: ['p', 'l']},
+  'l' => {name: 'lizard', beats: ['p', 'o']},
+  'o' => {name: 'spock', beats: ['r', 's']}
 }
 
 def prompt(message)
@@ -18,7 +11,7 @@ def prompt(message)
 end
 
 def win?(first, second)
-  WINNING_MOVES[first].include?(second)
+  CHOICES[first][:beats].include?(second)
 end
 
 def display_result(player, computer)
@@ -31,27 +24,42 @@ def display_result(player, computer)
   end
 end
 
-def display_scoreboard(win, loss)
+def get_overall_winner(win, loss)
   if (win == 5) && (loss == 5)
-    prompt("You're BOTH winners - it's a tie!")
+    'tie'
   elsif win >= 5
-    prompt("GAME OVER: Player won!")
+    'player'
   elsif loss >= 5
-    prompt("GAME OVER: Computer won!")
+    'computer'
   else
-    prompt("HUMAN: #{win}  COMPUTER: #{loss}")
+    prompt("HUMAN: #{win}  COMPUTER: #{loss}")  
   end
 end
+
+def display_scoreboard(winner)
+  case winner
+  when 'tie'      then prompt("You're BOTH winners - it's a tie!")
+  when 'player'   then prompt("GAME OVER: You won! :D :D :D")
+  when 'computer' then prompt("GAME OVER: Computer won!")                 
+  end
+end
+
+system('clear') || system('cls')
+
+puts('--------------------------------------------------------')
+puts("    Welcome to Rock, Paper, Scissors, Lizard, Spock!    ")
+puts('--------------------------------------------------------')
 
 wins = 0
 losses = 0
 loop do
   choice = ''
   loop do
-    prompt("CHOOSE:\nr - rock\np - paper\ns - scissors\nl - lizard\no - spock")
+    
+    prompt("CHOOSE:\n    r - rock\n    p - paper\n    s - scissors\n    l - lizard\n    o - spock")
     choice = Kernel.gets().chomp()
 
-    if CHOICES.include?(choice.downcase)
+    if CHOICES.keys.include?(choice.downcase)
       break
     else
       prompt("------------------------------------")
@@ -60,11 +68,11 @@ loop do
     end
   end
 
-  computer_choice = VALID_CHOICES.keys.sample
+  computer_choice = CHOICES.keys.sample
 
   prompt("----------------------------------------")
-  prompt("You chose: #{VALID_CHOICES[choice.downcase]}")
-  prompt("Computer chose: #{VALID_CHOICES[computer_choice]}")
+  prompt("You chose: #{CHOICES[choice.downcase][:name]}")
+  prompt("Computer chose: #{CHOICES[computer_choice][:name]}")
 
   if win?(choice, computer_choice)
     wins += 1
@@ -75,12 +83,14 @@ loop do
   display_result(choice, computer_choice)
   prompt("----------------------------------------")
 
-  display_scoreboard(wins, losses)
+  display_scoreboard(get_overall_winner(wins, losses))
   break if (wins >= 5) || (losses >= 5)
 
   prompt("Would you like to play again? (y/n)")
   play_again = gets().chomp()
-  break unless play_again.downcase().start_with?('y')
+  break if play_again.downcase().start_with?('n')
+
+  system('clear') || system('cls')
 end
 
 prompt("Thanks for playing!")

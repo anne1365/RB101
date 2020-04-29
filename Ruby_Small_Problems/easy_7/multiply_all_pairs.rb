@@ -5,29 +5,17 @@ Array that contains the product of every pair of numbers that can be formed betw
 Arrays. The results should be sorted by increasing value.You may assume that neither argument is an empty Array.
 
 UNDERSTANDING THE PROBLEM:
-  INPUTS  -->
-  OUTPUTS -->
-  QUESTIONS:
-  RULES:
-    EXPLICIT:
-
-    IMPLICIT:
   IDEAS:
-
-EXAMPLES / TEST CASES:
-
-DATA STRUCTURE:
-  INPUTS  -->
-  OUTPUTS -->
-
-ALGORITHM / PSEUDOCODE:
+    - Array#product
+    - while iterating, inject(:*)
+    - with new array, Array#sort
 
 =end # ----------------------------------------------------------------------------------------------------------
 
 
-def multiply_all_pairs(arr1, arr2)
-
+def multiply_all_pairs(a1, a2)
+  (a1.product(a2).map {|a| a.inject(:*)}).sort
 end
 
 
-multiply_all_pairs([2, 4], [4, 3, 1, 2]) == [2, 4, 4, 6, 8, 8, 12, 16]
+p multiply_all_pairs([2, 4], [4, 3, 1, 2]) == [2, 4, 4, 6, 8, 8, 12, 16]

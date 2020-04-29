@@ -35,6 +35,9 @@ def palindrome?(input)
 end
 
 def real_palindrome?(input)
+  p input.downcase
+  p input.downcase.scan(/\d+\w+/)
+  p input.downcase.scan(/\d+\w+/).join
   palindrome?(input.downcase.scan(/\d+\w+/).join)
 end
 

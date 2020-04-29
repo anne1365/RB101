@@ -5,36 +5,26 @@ by the number of entries in the Array, and then prints the result rounded to 3 d
 is non-empty.
 
 UNDERSTANDING THE PROBLEM:
-  INPUTS  -->
-  OUTPUTS -->
-  QUESTIONS:
-  RULES:
-    EXPLICIT:
-
-    IMPLICIT:
+  INPUTS  --> array of integers
+  OUTPUTS --> printed string including float rounded to three decimal places (returns nil)
   IDEAS:
-
-EXAMPLES / TEST CASES:
-
-DATA STRUCTURE:
-  INPUTS  -->
-  OUTPUTS -->
-
-ALGORITHM / PSEUDOCODE:
+    - Float#round(# digits)
+    - Inject :* divided by array.size
 
 =end # ----------------------------------------------------------------------------------------------------------
 
 
 def show_multiplicative_average(arr)
-
+  avg = ((arr.inject(:*)).to_f / arr.size)
+  puts "The result is #{("%.3f" % avg)}"
 end
 
 
 show_multiplicative_average([3, 5])
-The result is 7.500
+# The result is 7.500
 
 show_multiplicative_average([6])
-The result is 6.000
+# The result is 6.000
 
 show_multiplicative_average([2, 5, 7, 11, 13, 17])
-The result is 28361.667
+# The result is 28361.667
