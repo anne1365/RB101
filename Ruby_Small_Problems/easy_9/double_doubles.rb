@@ -13,10 +13,11 @@ UNDERSTANDING THE PROBLEM:
   OUTPUTS --> n if n is a double number, 2 * n otherwise
 
 =end # ----------------------------------------------------------------------------------------------------------
-
+require 'pry'
 
 def twice(num)
   arr = num.to_s.chars
+binding.pry
   ((arr.size.even?) && (arr.first(arr.size/2) == arr.last(arr.size/2))) ? num : num * 2
 end
 
