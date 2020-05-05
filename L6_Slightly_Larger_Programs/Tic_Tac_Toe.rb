@@ -24,6 +24,7 @@ end
 
 def display_board(brd)
   system 'cls'
+  puts "You're #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}."
   puts ""
   puts "     |     |"
   puts "  #{brd[1]}  |  #{brd[2]}  |  #{brd[3]}"
@@ -119,3 +120,5 @@ loop do
   answer = gets.chomp.downcase
   break if answer == 'n'
 end
+
+prompt "Thanks for playing Tic-Tac-Toe! Goodbye!"
