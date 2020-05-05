@@ -12,16 +12,22 @@ TTT Flow
   10. Goodbye!
 =end
 
-#CONSTANTS
+require 'pry'
+
+# >>> CONSTANTS <<<
 INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
+WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + # rows
+                [[1, 4, 7], [2, 5, 8], [3, 6, 9]] + # cols
+                [[1, 5, 9], [3, 5, 7]]              # diags
 
-#METHODS
+# >>> METHODS <<<
 def prompt(msg)
   puts "=> #{msg}"
 end
 
+# rubocop: disable Metrics/AbcSize
 def display_board(brd)
   system 'cls'
   puts ""
@@ -38,6 +44,7 @@ def display_board(brd)
   puts "     |     |"
   puts ""
 end
+# rubocop: enable Metrics/AbcSize
 
 def initialize_board
   new_board = {}
@@ -49,15 +56,14 @@ def empty_squares(brd)
   brd.keys.select { |n| brd[n] == INITIAL_MARKER }
 end
 
-def player_places_piece(brd) 
-square = ''
+def player_places_piece(brd)
+  square = ''
   loop do
     prompt "Choose a square (#{empty_squares(brd).join(', ')}): "
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
     prompt "ERROR: That's not a valid choice."
   end
-  
   brd[square] = PLAYER_MARKER
 end
 
@@ -75,25 +81,26 @@ def someone_won?(brd)
 end
 
 def detect_winner(brd)
-  winning_lines = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + #rows
-                  [[1, 4, 7], [2, 5, 8], [3, 6, 9]] + #cols
-                  [[1, 5, 9], [3, 5, 7]]              #diags
-
-  winning_lines.each do  |line| 
-    if brd[line[0]] == PLAYER_MARKER &&
-       brd[line[1]] == PLAYER_MARKER &&
-       brd[line[2]] == PLAYER_MARKER
-       return 'Player'
-    elsif brd[line[0]] == COMPUTER_MARKER &&
-       brd[line[1]] == COMPUTER_MARKER &&
-       brd[line[2]] == COMPUTER_MARKER
-       return "Computer"
+  WINNING_LINES.each do |line|
+    # if brd[line[0]] == PLAYER_MARKER &&
+    #    brd[line[1]] == PLAYER_MARKER &&
+    #    brd[line[2]] == PLAYER_MARKER
+    #   return 'Player'
+    # elsif brd[line[0]] == COMPUTER_MARKER &&
+    #       brd[line[1]] == COMPUTER_MARKER &&
+    #       brd[line[2]] == COMPUTER_MARKER
+    #   return "Computer"
+    # end
+    if brd.values_at(line[0], line[1], line[2]).all?('X')
+      return 'Player'
+    elsif brd.values_at(line[0], line[1], line[2]).all?('O')
+      return 'Computer'
     end
   end
   nil
 end
 
-#MAIN GAME LOGIC
+# >>> MAIN GAME LOGIC <<<
 loop do
   board = initialize_board
 
@@ -119,3 +126,5 @@ loop do
   answer = gets.chomp.downcase
   break if answer == 'n'
 end
+
+prompt "Thanks for playing Tic-Tac-Toe! Goodbye!"
