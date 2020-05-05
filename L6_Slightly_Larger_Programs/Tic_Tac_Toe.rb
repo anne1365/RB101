@@ -10,11 +10,23 @@ TTT Flow
   8.  Play again?
   9.  If yes, go to #1
   10. Goodbye!
+
+JOINOR IDEAS
+  - method accepts (potentially) three values - array (req.),
+    punctuation (opt.),    and joining word (opt.) -  optional
+    vals will need default vals (provided in examples - ', '
+    and 'or' resp.)
+  - Does join method have additional parameters it can take to
+    increase method's versatility?
+  - If not, could the array be split to allow two seperate
+    join's?
 =end
 
 require 'pry'
-
-# >>> CONSTANTS <<<
+# ---------------------------->>>  CONSTANTS  <<<----------------------------
+PLAYER = 'Player'
+COMPUTER = 'Computer'
+WHO_GOES_FIRST = [PLAYER, COMPUTER]
 INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
@@ -22,9 +34,18 @@ WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + # rows
                 [[1, 4, 7], [2, 5, 8], [3, 6, 9]] + # cols
                 [[1, 5, 9], [3, 5, 7]]              # diags
 
-# >>> METHODS <<<
+# ---------------------------->>>   METHODS   <<<----------------------------
 def prompt(msg)
   puts "=> #{msg}"
+end
+
+def joinor(arr, punc = ', ', word = 'or')
+  if arr.count > 1
+    last_el = arr.delete(arr.last)
+    "#{arr.join(punc)}#{punc}#{word} #{last_el}"
+  else
+    arr[0]
+  end
 end
 
 # rubocop: disable Metrics/AbcSize
@@ -57,10 +78,37 @@ def empty_squares(brd)
   brd.keys.select { |n| brd[n] == INITIAL_MARKER }
 end
 
+def set_who_goes_first
+  prompt("Who's going first?\n1 - I am!\n2 - Computer\n3 - You pick!")
+  answer = gets.chomp.to_i
+
+  case answer
+  when 1 then PLAYER
+  when 2 then COMPUTER
+  when 3 then WHO_GOES_FIRST.sample
+  end
+end
+
+def alternate_player(current_player)
+  if current_player == COMPUTER
+    PLAYER
+  elsif current_player == PLAYER
+    COMPUTER
+  end
+end
+
+def place_piece!(brd, current_player)
+  if current_player == PLAYER
+    player_places_piece(brd)
+  elsif current_player == COMPUTER
+    computer_places_piece(brd)
+  end
+end
+
 def player_places_piece(brd)
   square = ''
   loop do
-    prompt "Choose a square (#{empty_squares(brd).join(', ')}): "
+    prompt "Choose a square (OPTIONS: #{joinor(empty_squares(brd))}): "
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
     prompt "ERROR: That's not a valid choice."
@@ -68,8 +116,36 @@ def player_places_piece(brd)
   brd[square] = PLAYER_MARKER
 end
 
+def computer_offensive_move(brd)
+  WINNING_LINES.each do |line|
+    if brd.values_at(*line).count(COMPUTER_MARKER) == 2 &&
+       brd.values_at(*line).count(PLAYER_MARKER) == 0
+      return line[brd.values_at(*line).index(' ')]
+    end
+  end
+  nil
+end
+
+def computer_defensive_move(brd)
+  WINNING_LINES.each do |line|
+    if brd.values_at(*line).count(PLAYER_MARKER) == 2 &&
+       brd.values_at(*line).count(COMPUTER_MARKER) == 0
+      return line[brd.values_at(*line).index(' ')]
+    end
+  end
+  nil
+end
+
 def computer_places_piece(brd)
-  square = empty_squares(brd).sample
+  square = if !!computer_offensive_move(brd)
+             computer_offensive_move(brd)
+           elsif !!computer_defensive_move(brd)
+             computer_defensive_move(brd)
+           elsif brd[5] == ' '
+             5
+           else
+             empty_squares(brd).sample
+           end
   brd[square] = COMPUTER_MARKER
 end
 
@@ -83,45 +159,66 @@ end
 
 def detect_winner(brd)
   WINNING_LINES.each do |line|
-    # if brd[line[0]] == PLAYER_MARKER &&
-    #    brd[line[1]] == PLAYER_MARKER &&
-    #    brd[line[2]] == PLAYER_MARKER
-    #   return 'Player'
-    # elsif brd[line[0]] == COMPUTER_MARKER &&
-    #       brd[line[1]] == COMPUTER_MARKER &&
-    #       brd[line[2]] == COMPUTER_MARKER
-    #   return "Computer"
-    # end
-    if brd.values_at(line[0], line[1], line[2]).all?('X')
-      return 'Player'
-    elsif brd.values_at(line[0], line[1], line[2]).all?('O')
-      return 'Computer'
+    if brd.values_at(*line).all?(PLAYER_MARKER)
+      return PLAYER
+    elsif brd.values_at(*line).all?(COMPUTER_MARKER)
+      return COMPUTER
     end
   end
   nil
 end
 
-# >>> MAIN GAME LOGIC <<<
+def display_scoreboard(wins, losses)
+  prompt("PLAYER: #{wins} | COMPUTER: #{losses}")
+end
+
+def determine_overall_winner(wins, losses)
+  display_scoreboard(wins, losses)
+
+  if wins == 5 && losses == 5
+    'tie'
+  elsif wins >= 5
+    PLAYER
+  elsif losses >= 5
+    COMPUTER
+  end
+end
+
+def display_overall_winner(winner)
+  case winner
+  when 'tie'    then prompt "You're both winners - it's a tie!"
+  when PLAYER   then prompt "Congratulations! You've won the match!"
+  when COMPUTER then prompt "Computer won the match!"
+  end
+end
+
+# ------------------------->>> MAIN GAME LOGIC <<<-------------------------
+wins = 0
+losses = 0
+current_player = ''
 loop do
   board = initialize_board
-
+  current_player = set_who_goes_first
   loop do
     display_board(board)
-
-    player_places_piece(board)
-    break if someone_won?(board) || board_full?(board)
-
-    computer_places_piece(board)
+    place_piece!(board, current_player)
+    current_player = alternate_player(current_player)
     break if someone_won?(board) || board_full?(board)
   end
 
   display_board(board)
 
   if someone_won?(board)
+    winner = detect_winner(board)
+    wins += 1 if winner == PLAYER
+    losses += 1 if winner == COMPUTER
     prompt "#{detect_winner(board)} won!"
   else
     prompt "It's a tie!"
   end
+
+  display_overall_winner(determine_overall_winner(wins, losses))
+  break if wins >= 5 || losses >= 5
 
   prompt("Would you like to play again? (y/n)")
   answer = gets.chomp.downcase
