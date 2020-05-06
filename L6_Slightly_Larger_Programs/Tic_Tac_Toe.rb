@@ -79,8 +79,13 @@ def empty_squares(brd)
 end
 
 def set_who_goes_first
-  prompt("Who's going first?\n1 - I am!\n2 - Computer\n3 - You pick!")
-  answer = gets.chomp.to_i
+  answer = nil
+  loop do
+    prompt("Who's going first?\n1 - I am!\n2 - Computer\n3 - You pick!")
+    answer = gets.chomp.to_i
+    break if answer > 0 && answer <= 3
+    prompt "ERROR: Please enter 1, 2, or 3.\n"
+  end
 
   case answer
   when 1 then PLAYER
@@ -220,9 +225,8 @@ loop do
   display_overall_winner(determine_overall_winner(wins, losses))
   break if wins >= 5 || losses >= 5
 
-  prompt("Would you like to play again? (y/n)")
-  answer = gets.chomp.downcase
-  break if answer == 'n'
+  prompt("Would you like to play again? (y/n)") 
+  break if gets.chomp.downcase == 'n'
 end
 
 prompt "Thanks for playing Tic-Tac-Toe! Goodbye!"
