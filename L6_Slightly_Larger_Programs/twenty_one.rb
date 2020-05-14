@@ -5,6 +5,9 @@ TEXT = YAML.load_file('twenty_one_config.yml')
 PLAYER = 'YOUR'      # addressing player
 DEALER = "DEALER'S"  # referring to dealer
 
+HIT = 'H'
+STAY = 'S'
+
 WINNING_NUMBER = 21
 DEALER_STAY_AT = 17
 
@@ -23,11 +26,11 @@ end
 
 def display_player_hand(cards)
   numbers = cards.map { |card| [card[1]] }
-  prompt "#{PLAYER} HAND:  #{numbers.join(', ')}\n"
+  prompt("#{PLAYER} HAND:  #{numbers.join(', ')}\n")
 end
 
 def display_dealer_hand(cards)
-  prompt "#{DEALER} HAND: #{cards[0][1]}, unknown\n\n"
+  prompt("#{DEALER} HAND: #{cards[0][1]}, unknown\n\n")
 end
 
 def hit(deck, cards)
@@ -51,12 +54,35 @@ def busted?(total)
   total > WINNING_NUMBER
 end
 
+def players_turn
+  move = ''
+
+  loop do
+    puts TEXT[:hit_or_stay]
+    move = gets.chomp.upcase
+    if move == STAY || move == HIT
+      break
+    else
+      prompt(TEXT[:invalid_entry])
+    end
+  end
+  move
+end
+
+def update_hand(deck, hand)
+  hit(deck, hand)
+end
+
 def display_total(person, total)
-  prompt "#{person} TOTAL: #{total}\n\n"
+  prompt("#{person} TOTAL: #{total}\n\n")
 end
 
 def player_won?(total_one, total_two)
   total_one > total_two
+end
+
+def round_over?(total)
+  total > WINNING_NUMBER || total == WINNING_NUMBER
 end
 
 def display_round_winner(bool)
@@ -68,8 +94,6 @@ def display_scoreboard(wins, losses)
 end
 
 def determine_overall_winner(wins, losses)
-  display_scoreboard(wins, losses)
-
   if wins == 5 && losses == 5
     'tie'
   elsif wins >= 5
@@ -85,12 +109,12 @@ def display_overall_winner(wins, losses)
   case winner
   when 'tie'    then puts TEXT[:tied_match]
   when PLAYER   then puts TEXT[:player_won_match]
-  when DEALER then puts TEXT[:dealer_won_match]
+  when DEALER   then puts TEXT[:dealer_won_match]
   end
 end
 
 def next_round
-  prompt "Press any key to continue: "
+  prompt("Press any key to continue: ")
   gets.chomp
 end
 
@@ -99,10 +123,17 @@ def play_again?
   gets.chomp.upcase == 'Y'
 end
 
+def clean_exit
+  prompt("Press any key to exit: ")
+  gets.chomp
+  system 'cls'
+end
+
 # ----------------------------->>> GAME  LOGIC <<<-----------------------------
 loop do
   wins = 0
   losses = 0
+
   loop do
     break if losses >= 5 || wins >= 5
 
@@ -123,25 +154,14 @@ loop do
     display_total(PLAYER, player_total)
 
     # PLAYER'S TURN
-    move_choice = nil
+    move_choice = ''
     loop do
-      break if player_total > WINNING_NUMBER || player_total == WINNING_NUMBER
+      break if round_over?(player_total)
+      move_choice = players_turn
+      break if move_choice == STAY
+      prompt(TEXT[:player_hits])
 
-      loop do
-        puts TEXT[:hit_or_stay]
-        move_choice = gets.chomp.upcase
-
-        if move_choice == 'S' || move_choice == 'H'
-          break
-        else
-          prompt TEXT[:invalid_entry]
-        end
-      end
-
-      break if move_choice == 'S'
-      prompt TEXT[:player_hits]
-
-      player_hand = hit(deck, player_hand)
+      update_hand(deck, player_hand)
       display_player_hand(player_hand)
 
       player_total = get_total(player_hand)
@@ -160,24 +180,23 @@ loop do
       puts TEXT[:player_twenty_one]
       next_round
       next
-    elsif move_choice == 'S'
-      prompt TEXT[:player_stays]
+    elsif move_choice == STAY
+      prompt(TEXT[:player_stays])
       display_total(PLAYER, player_total)
     end
 
     # DEALER'S TURN (IF PLAYER HASN'T BUSTED)
     loop do
       unless player_total > WINNING_NUMBER
-        break if (dealer_total > WINNING_NUMBER) ||
-                 (dealer_total == WINNING_NUMBER)
+        break if round_over?(dealer_total)
 
         if dealer_total < DEALER_STAY_AT
-          prompt TEXT[:dealer_hits]
-          dealer_hand = hit(deck, dealer_hand)
+          prompt(TEXT[:dealer_hits])
+          update_hand(deck, dealer_hand)
           dealer_total = get_total(dealer_hand)
           display_total(DEALER, dealer_total)
         else
-          prompt "#{TEXT[:dealer_stays]} at #{dealer_total}."
+          prompt("#{TEXT[:dealer_stays]} at #{dealer_total}.")
           break
         end
       end
@@ -208,6 +227,7 @@ loop do
     end
   end
 
+  display_scoreboard(wins, losses)
   display_overall_winner(wins, losses)
 
   # PLAY AGAIN?
@@ -215,3 +235,4 @@ loop do
 end
 
 puts TEXT[:thanks_for_playing]
+clean_exit
