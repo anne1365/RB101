@@ -44,7 +44,7 @@
                     \n         `-    \\`_`\"'-
                     \n                         YOU WON THE TOURNAMENT!!\n"
 :tied_match: "\n    I can't believe this, but this match is tied!  \n"
-:dealer_won_match: "\n               Dealer won the match :(              \n"
+:dealer_won_match: "                Dealer won the match :(              \n"
 
 # PLAY AGAIN?
 :play_again: "\n\n<>.><o><o><o><o><o><o><o><><o><o><o><o><o><o><o><.<>
