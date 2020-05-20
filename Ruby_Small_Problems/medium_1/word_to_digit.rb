@@ -26,8 +26,8 @@ STRING_DIGITS = {'one' => '1', 'two' => '2', 'three' => '3', 'four' => '4', 'fiv
 
 def word_to_digit(str)
   arr = str.split.map do |el|
-    if STRING_DIGITS.keys.include?(el.scan(/[^A-Za-z]/).to_s)
-      p el.scan(/[A-Za-z]/).sub!(STRING_DIGITS[el.scan(/a[A-Za-z]/)])
+    if STRING_DIGITS.keys.include?((el.scan(/\w/)).join)
+      el.sub((el.scan(/\w/)).join, STRING_DIGITS[(el.scan(/\w/)).join])
     else
       el
     end
@@ -35,9 +35,14 @@ def word_to_digit(str)
   arr.join(' ')
 end
 
+p word_to_digit('Please call me at five five five one two three four. Thanks.') == 'Please call me at 5 5 5 1 2 3 4. Thanks.'
+p word_to_digit('I have seven cats, two of which have three tails.')
 
 
-
-
-
-p word_to_digit('Please call me at five five five one two three four. Thanks.')# == 'Please call me at 5 5 5 1 2 3 4. Thanks.'
+#LS METHOD
+def word_to_digit(words)
+  STRING_DIGITS.keys.each do |word|
+    words.gsub!(/\b#{word}\b/, STRING_DIGITS[word])
+  end
+  words
+end
