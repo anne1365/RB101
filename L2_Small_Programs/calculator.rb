@@ -3,7 +3,7 @@
 # perform the operation on the two numbers
 # output the result
 
-require 'yaml'
+require "yaml"
 MESSAGES = YAML.load_file('calculator_config.yml')
 
 def prompt(message)
