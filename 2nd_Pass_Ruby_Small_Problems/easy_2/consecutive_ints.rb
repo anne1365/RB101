@@ -11,9 +11,7 @@ when 's'
   puts "The sum of the integers between 1 and #{number} is #{ary.sum}."
 when 'p'
   product = 1
-  ary.each do |i|
-    product *= i
-  end
+  ary.each { |i| product *= i }
   puts "The product of the integers between 1 and #{number} is #{product}."
 else
   puts "ERROR: Invalid selection."

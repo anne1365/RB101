@@ -45,14 +45,17 @@ ALGORITHM / PSEUDOCODE:
 
 def count_occurrences(input_array)
   ary_elements = Hash.new
+  
   input_array.each do |element| 
     element = element.downcase #<-- FURTHER EXPLORATION-- case insensitivity
+    
     if ary_elements.has_key?(element)
       ary_elements[element] += 1
     else 
       ary_elements[element] = 1
     end
   end
+  
   ary_elements
 end
 

@@ -9,6 +9,7 @@
         array will be last eval line
 =end
 
+
 def stringy(int, first = 1)
   d = [0, 1]  
   d.reverse! if first == 0
@@ -17,6 +18,7 @@ def stringy(int, first = 1)
   int.times { |i| i.odd? ? arr << d[0] : arr << d[1] }
   arr.join
 end
+
 
 puts stringy(5)
 puts stringy(5, 0)
