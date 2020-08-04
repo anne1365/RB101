@@ -14,8 +14,9 @@ QUESTIONS:
 
 ALGORITHM: 
 =end
+require 'yaml'
 
-text = "This is a house. This is the house that I live in! I live in my house with my pet ficus. Do you have a ficus?"
+TEXT = YAML.load_file('')
 
 longest = []
 text.split(/[.!?]/).each do |sentence|
