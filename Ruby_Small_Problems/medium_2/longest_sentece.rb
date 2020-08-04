@@ -14,17 +14,21 @@ QUESTIONS:
 
 ALGORITHM: 
 =end
-require 'yaml'
+passage = File.open("frankenstein.txt")
 
-TEXT = YAML.load_file('')
 
+
+def longest_sentence(passage)
 longest = []
-text.split(/[.!?]/).each do |sentence|
+
+passage.split(/[.!?]/).each do |sentence|
   if sentence.size > longest.size
     longest = sentence
   end
 end
 
-p longest
-p longest.split.size
+puts "THE LONGEST SENTENCE IS: '#{longest.strip}'\n\n"
+puts "The longest sentence is #{longest.split.size} words long!"
+end
 
+p longest_sentence(passage.read)
