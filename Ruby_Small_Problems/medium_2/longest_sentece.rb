@@ -14,3 +14,16 @@ QUESTIONS:
 
 ALGORITHM: 
 =end
+
+text = "This is a house. This is the house that I live in! I live in my house with my pet ficus. Do you have a ficus?"
+
+longest = []
+text.split(/[.!?]/).each do |sentence|
+  if sentence.size > longest.size
+    longest = sentence
+  end
+end
+
+p longest
+p longest.split.size
+
