@@ -48,6 +48,8 @@ UNDERSTANDING THE PROBLEM:
      a matched string will be empty after a maximum of string length/2 times, if it's not, it
      isn't matched
 
+    This problem had me majorly tilted
+
 =end # ----------------------------------------------------------------------------------------------------------
 
 def balanced?(str)
