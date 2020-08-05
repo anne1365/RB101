@@ -26,9 +26,9 @@ ALGORITHM / PSEUDOCODE:
 
 def letter_case_count(str)
   hsh = {
-    lowercase: (str.scan(/[[:lower:]]/).join.size),
-    uppercase: (str.scan(/[[:upper:]]/).join.size),
-    neither:   (str.scan(/[^A-Za-z]/).join.size)
+    lowercase: (str.scan(/[[:lower:]]/).size),
+    uppercase: (str.scan(/[[:upper:]]/).size),
+    neither:   (str.scan(/[^A-Za-z]/).size)
   }
 end
 
