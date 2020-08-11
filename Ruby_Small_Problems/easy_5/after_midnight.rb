@@ -71,6 +71,7 @@ p time_of_day(-4231) == "01:29"
 =begin
 LS SOLUTION
 
+
 MINUTES_PER_HOUR = 60
 HOURS_PER_DAY = 24
 MINUTES_PER_DAY = MINUTES_PER_DAY * HOURS_PER_DAY           <-- constants minimize # of mystery numbers
