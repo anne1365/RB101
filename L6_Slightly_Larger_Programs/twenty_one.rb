@@ -168,6 +168,7 @@ loop do
       display_total(PLAYER, player_total)
 
       break if player_total == WINNING_NUMBER
+      
     end
 
     if player_total > WINNING_NUMBER
